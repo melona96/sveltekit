@@ -1,3 +1,13 @@
+<script>
+    import { onMount } from 'svelte';
+    let data = [];
+
+    onMount(async () => {
+        const res = await fetch('/home');
+        data = await res.json();
+    });
+</script>
+
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
@@ -153,9 +163,13 @@
                         <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">보러가기</a></div>
                     </div>
                 </div>
+                {#each data as row}
+                    <p>{row.columnName}</p>
+                {/each}
             </div>
 
 
         </div>
     </div>
 </section>
+
