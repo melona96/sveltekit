@@ -8,5 +8,4 @@
     .container {
         background-image: url("src/lib/img/about_main.jpg");
     }
-
 </style>
