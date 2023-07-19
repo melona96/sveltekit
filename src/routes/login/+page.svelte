@@ -2,18 +2,19 @@
     let userId = '';
     let pwd = '';
     async function test() {
-        const credentials = {
+        const info = {
             userId,
             pwd
         };
         try {
-            console.log(credentials)
+            console.log(info)
             const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(credentials)
+                body: JSON.stringify(info),
+                credentials: 'include'
             });
 
             if (response.ok) {
