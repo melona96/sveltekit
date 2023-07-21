@@ -8,7 +8,7 @@
         };
         try {
             console.log(info)
-            const response = await fetch('/api/user/join', {
+            const response = await fetch('/api/user/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

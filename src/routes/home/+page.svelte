@@ -5,20 +5,20 @@
 
 <!-- Section-->
 <section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
+    <div class="container px-4 px-lg-5 mt-3">
+        <p class="fw-bolder">최근 게시글</p>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {#each data.item as row}
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- Product image-->
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." style="height: 40%"/>
                         <!-- Product details-->
-                        <div class="card-body p-4">
+                        <div class="card-body p-5">
                             <div class="text-center">
                                 <!-- 식당명-->
                                 <h5 class="fw-bolder">{row.restaurant_nm}</h5>
                                 <!-- 카테고리 -->
-                                {row.restaurant_info}
                             </div>
                         </div>
                         <!-- Product actions-->
@@ -31,4 +31,7 @@
         </div>
     </div>
 </section>
+
+
+
 
