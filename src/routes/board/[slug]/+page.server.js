@@ -5,7 +5,7 @@ export async function load(req) {
     try {
         const param = req.params.slug;
         console.log(param)
-        const res = await client.query('SELECT * FROM tk_restaurant WHERE restaurant_id = $1 ORDER BY restaurant_id', [param]);
+        const res = await client.query('SELECT * FROM dc_board WHERE category_cd = $1', [param]);
         return {
             item: res.rows
         }

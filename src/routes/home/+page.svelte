@@ -2,6 +2,12 @@
     export let data;
     console.log(data);
 </script>
+<style>
+    p.fw-bolder {
+        color: #29367c;
+    }
+</style>
+
 
 <!-- Section-->
 <section class="py-5">
@@ -17,13 +23,20 @@
                         <div class="card-body p-5">
                             <div class="text-center">
                                 <!-- 식당명-->
-                                <h5 class="fw-bolder">{row.restaurant_nm}</h5>
+                                <h5 class="fw-bolder"><a href="/board/{row.category_nm_en}/{row.board_seq}">{row.title}</a></h5>
                                 <!-- 카테고리 -->
                             </div>
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/restaurant/{row.restaurant_id}">보러가기</a></div>
+                            <!--<div class="text-center">
+                                    <p>{row.category_nm}</p>
+                                    <p>[{row.input_dt}]</p>-->
+                            <div class="text-center">
+                                <p>{row.category_nm}</p>
+                                <p>[10:51]</p>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -31,6 +44,7 @@
         </div>
     </div>
 </section>
+
 
 
 

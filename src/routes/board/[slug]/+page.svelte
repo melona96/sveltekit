@@ -14,9 +14,9 @@
                     <div class="card-body p-4">
                         <div class="text-center">
                             <!-- 식당명-->
-                            <h5 class="fw-bolder">{row.restaurant_nm}</h5>
+                            <h5 class="fw-bolder">{row.title}</h5>
                             <!-- 카테고리 -->
-                            {row.restaurant_info}
+                            {row.content}
                         </div>
                     </div>
                 </div>
