@@ -1,7 +1,5 @@
 <header class="jumbotron text-center header">
-    <div class="container px-md-5" style="height: 200px">
-        <a class="navbar-brand" href=""></a>
-    </div>
+
 </header>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -9,12 +7,42 @@
         <a class="navbar-brand" href="/home">Playground</a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav">
+                <li class="nav-item dropdown">
+                    <a aria-expanded="true" class="nav-link dropdown-toggle" href="#" title="구독 채널" data-toggle="dropdown" aria-haspopup="true">
+                        구독<span class="d-none d-md-inline"> </span><span class="d-none d-md-inline">채널</span>
+                    </a>
+                    <div class="dropdown-menu left">
+                        <a class="dropdown-item" href="#">구독중인 채널이 없습니다.</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a aria-expanded="true" class="nav-link dropdown-toggle" href="#" title="채널" data-toggle="dropdown" aria-haspopup="true">
+                        주요<span class="d-none d-md-inline"> </span><span class="d-none d-md-inline">채널</span>
+                    </a>
+                    <div class="dropdown-menu left">
+                        <a class="dropdown-item" href="/b/live">베스트 라이브</a>
+                        <a class="dropdown-item" href="/b/replay">종합 심의대상</a>
+                        <a class="dropdown-item" href="/b/breaking">종합 속보</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/b/notice">공지사항</a>
+                        <a class="dropdown-item" href="/b/request">문의 게시판</a>
+                        <a class="dropdown-item" href="/b/whyiblocked">채널 문의 게시판</a>
+
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/channels">
+                        <span class="d-none d-xs-inline">채널</span><span class="d-none d-md-inline"> </span>검색
+                    </a>
+                </li>
+            </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/home">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                <li class="nav-item"><a class="nav-link" aria-current="page" href="/home">메인메뉴</a></li>
+                <li class="nav-item"><a class="nav-link" href="/login">로그인</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
+                        드롭다운
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#">Action</a></li>
