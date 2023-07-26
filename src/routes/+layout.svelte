@@ -32,11 +32,6 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/channels">
-                        <span class="d-none d-xs-inline">채널</span><span class="d-none d-md-inline"> </span>검색
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="/api/board/list">
                         <span class="d-none d-xs-inline">테스트</span><span class="d-none d-md-inline"> </span>테스트
                     </a>

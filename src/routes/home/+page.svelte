@@ -21,6 +21,9 @@
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-3">
+        <div>
+            <a class="btn btn-outline-secondary" href="/board/write" title="글쓰기">글쓰기</a>
+        </div>
         <table class="table">
             <thead class="table-light">
                 <tr>
