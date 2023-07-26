@@ -33,7 +33,7 @@
                 </tr>
             </thead>
             <tbody>
-                {#each data.item as row}
+                <!--{#each data.item as row}
                     <tr on:click={boardDetail(row.category_nm_en,row.board_seq)}>
                         <td>
                             {row.title}
@@ -45,7 +45,7 @@
                             {row.input_id}
                         </td>
                         <td>
-                            10:51<!--[{row.input_dt}]-->
+                            10:51&lt;!&ndash;[{row.input_dt}]&ndash;&gt;
                         </td>
                         <td>
                             {row.hits}
@@ -54,7 +54,7 @@
                             {row.up}
                         </td>
                     </tr>
-                {/each}
+                {/each}-->
             </tbody>
         </table>
     </div>
