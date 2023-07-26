@@ -9,12 +9,12 @@
     let content;
 
     async function testWrite() {
+        content = quill.getText();
         const data = {
             title,
             content
         };
         try {
-            console.log(data)
             const response = await fetch('/api/board/write', {
                 method: 'POST',
                 headers: {
@@ -27,6 +27,7 @@
             console.log(response);
             if (response.ok) {
                 console.log('연동 성공');
+                console.log(JSON.stringify(data));
                 const token = await response.json();
                 // 토큰을 저장하거나 필요한 후속 작업 수행
                 goto('/home')
