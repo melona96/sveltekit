@@ -1,6 +1,6 @@
 <script>
     export let data;
-    console.log(data);
+    console.log(JSON.stringify(data,null, 2));
 
     function boardDetail(category_nm_en, board_seq) {
         const url = `/board/${category_nm_en}/${board_seq}`;
@@ -33,28 +33,28 @@
                 </tr>
             </thead>
             <tbody>
-                <!--{#each data.item as row}
-                    <tr on:click={boardDetail(row.category_nm_en,row.board_seq)}>
+                {#each data.boardList as board}
+                    <tr on:click={boardDetail(board.categoryNmEn,board.boardSeq)}>
                         <td>
-                            {row.title}
+                            {board.title}
                         </td>
                         <td>
-                            {row.category_nm}
+                            {board.categoryNm}
                         </td>
                         <td>
-                            {row.input_id}
+                            {board.inputId}
                         </td>
                         <td>
-                            10:51&lt;!&ndash;[{row.input_dt}]&ndash;&gt;
+                            {board.inputDt}
                         </td>
                         <td>
-                            {row.hits}
+                            {board.hits}
                         </td>
                         <td>
-                            {row.up}
+                            {board.up}
                         </td>
                     </tr>
-                {/each}-->
+                {/each}
             </tbody>
         </table>
     </div>

@@ -17,24 +17,19 @@ import pool from "/src/lib/db/db.js";
 }*/
 
 export async function load({fetch}) {
-    const info = "test!!!"
     try {
-        console.log(info)
         const response = await fetch('/api/board/list', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(info),
+            }
             // credentials: 'include'
         });
 
         if (response.ok) {
             console.log('연동 성공');
-            const token = await response.json();
-            return {
-                item : token
-            };
+            const data = await response.json();
+            return data;
         } else {
             // 로그인 실패 처리
             console.log('연동 실패')
