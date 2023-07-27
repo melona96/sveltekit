@@ -1,9 +1,8 @@
 <script>
     export let data;
-    console.log(JSON.stringify(data,null, 2));
 
-    function boardDetail(category_nm_en, board_seq) {
-        const url = `/board/${category_nm_en}/${board_seq}`;
+    function boardDetail(categoryNmEn, boardSeq) {
+        const url = `/board/${categoryNmEn}/${boardSeq}`;
         window.location.href = url; //
     }
 </script>

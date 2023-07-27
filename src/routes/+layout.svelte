@@ -9,27 +9,26 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav">
                 <li class="nav-item dropdown">
-                    <a aria-expanded="true" class="nav-link dropdown-toggle" href="#" title="구독 채널" data-toggle="dropdown" aria-haspopup="true">
-                        구독<span class="d-none d-md-inline"> </span><span class="d-none d-md-inline">채널</span>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        드롭다운
                     </a>
-                    <div class="dropdown-menu left">
-                        <a class="dropdown-item" href="#">구독중인 채널이 없습니다.</a>
-                    </div>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a aria-expanded="true" class="nav-link dropdown-toggle" href="#" title="채널" data-toggle="dropdown" aria-haspopup="true">
-                        주요<span class="d-none d-md-inline"> </span><span class="d-none d-md-inline">채널</span>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        드롭다운
                     </a>
-                    <div class="dropdown-menu left">
-                        <a class="dropdown-item" href="/b/live">베스트 라이브</a>
-                        <a class="dropdown-item" href="/b/replay">종합 심의대상</a>
-                        <a class="dropdown-item" href="/b/breaking">종합 속보</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/b/notice">공지사항</a>
-                        <a class="dropdown-item" href="/b/request">문의 게시판</a>
-                        <a class="dropdown-item" href="/b/whyiblocked">채널 문의 게시판</a>
-
-                    </div>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/api/board/list">
@@ -64,4 +63,3 @@
     <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Kenny Commpany 2023</p></div>
 </footer>
 <!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
