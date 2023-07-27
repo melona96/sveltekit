@@ -14,6 +14,11 @@
     tr:hover {
         background-color: #f2f2f2;
     }
+
+    th.board-title {
+        text-align: center;
+    }
+
 </style>
 
 
@@ -26,7 +31,7 @@
         <table class="table">
             <thead class="table-light">
                 <tr>
-                    <th>제목</th>
+                    <th class="board-title">제목</th>
                     <th>카테고리</th>
                     <th>작성자</th>
                     <th>작성일</th>
@@ -62,3 +67,4 @@
     </div>
 
 </section>
+
