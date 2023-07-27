@@ -12,6 +12,12 @@
                 {data.content}
                 <p>조회수 [{data.hits}]</p>
             </div>
+            <div>
+                추천
+            </div>
+            <div>
+                비추천
+            </div>
         </div>
 
 
