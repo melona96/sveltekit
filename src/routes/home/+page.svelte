@@ -14,6 +14,16 @@
     tr:hover {
         background-color: #f2f2f2;
     }
+
+    th.board-title {
+        text-align: center;
+    }
+
+    .board-comment-count {
+        color: #777;
+        font-size: smaller;
+    }
+
 </style>
 
 
@@ -26,7 +36,7 @@
         <table class="table">
             <thead class="table-light">
                 <tr>
-                    <th>제목</th>
+                    <th class="board-title">제목</th>
                     <th>카테고리</th>
                     <th>작성자</th>
                     <th>작성일</th>
@@ -35,30 +45,34 @@
                 </tr>
             </thead>
             <tbody>
-                {#each data.boardList as board}
-                    <tr on:click={boardDetail(board.categoryNmEn,board.boardSeq)}>
-                        <td>
-                            {board.title}
-                        </td>
-                        <td>
-                            {board.categoryNm}
-                        </td>
-                        <td>
-                            {board.inputId}
-                        </td>
-                        <td>
-                            {board.inputDt}
-                        </td>
-                        <td>
-                            {board.hits}
-                        </td>
-                        <td>
-                            {board.up}
-                        </td>
-                    </tr>
-                {/each}
+                {#if data != null}
+                    {#each data.boardList as board}
+                        <tr on:click={boardDetail(board.categoryNmEn,board.boardSeq)}>
+                            <td>
+                                {board.title}
+                                <span class="board-comment-count">[{board.commentCount}]</span>
+                            </td>
+                            <td>
+                                {board.categoryNm}
+                            </td>
+                            <td>
+                                {board.inputId}
+                            </td>
+                            <td>
+                                {board.inputDt}
+                            </td>
+                            <td>
+                                {board.hits}
+                            </td>
+                            <td>
+                                {board.up}
+                            </td>
+                        </tr>
+                    {/each}
+                {/if}
             </tbody>
         </table>
     </div>
 
 </section>
+
