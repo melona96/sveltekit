@@ -40,28 +40,31 @@
                 </tr>
             </thead>
             <tbody>
-                {#each data.boardList as board}
-                    <tr on:click={boardDetail(board.categoryNmEn,board.boardSeq)}>
-                        <td>
-                            {board.title}
-                        </td>
-                        <td>
-                            {board.categoryNm}
-                        </td>
-                        <td>
-                            {board.inputId}
-                        </td>
-                        <td>
-                            {board.inputDt}
-                        </td>
-                        <td>
-                            {board.hits}
-                        </td>
-                        <td>
-                            {board.up}
-                        </td>
-                    </tr>
-                {/each}
+                {#if data != null}
+                    {#each data.boardList as board}
+                        <tr on:click={boardDetail(board.categoryNmEn,board.boardSeq)}>
+                            <td>
+                                {board.title}
+                                <sapn>[{board.commentCount}]</sapn>
+                            </td>
+                            <td>
+                                {board.categoryNm}
+                            </td>
+                            <td>
+                                {board.inputId}
+                            </td>
+                            <td>
+                                {board.inputDt}
+                            </td>
+                            <td>
+                                {board.hits}
+                            </td>
+                            <td>
+                                {board.up}
+                            </td>
+                        </tr>
+                    {/each}
+                {/if}
             </tbody>
         </table>
     </div>

@@ -1,9 +1,11 @@
 <script>
     import {goto} from "$app/navigation";
     export let data;
+    console.log(data)
 
-    $: boardSeq = data.boardSeq;
+    $: boardSeq = data.board.boardSeq;
     let userId = 'test1';
+    let content;
     async function testUp() {
         const param = {
             boardSeq,
@@ -35,42 +37,79 @@
             // 에러 처리
         }
     }
+
+    async function commentWrite() {
+        const param = {
+            boardSeq,
+            userId,
+            content
+        };
+        console.log(param);
+        try {
+            const response = await fetch('/api/board/comment/write', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(param),
+                credentials: 'include'
+            });
+
+            console.log(response);
+            if (response.ok) {
+                console.log('연동 성공');
+                console.log(JSON.stringify(data));
+                const token = await response.json();
+                // 토큰을 저장하거나 필요한 후속 작업 수행
+                goto('/home')
+            } else {
+                // 로그인 실패 처리
+                alert('ERROR: 댓글 작성을 실패했습니다.')
+            }
+        } catch (error) {
+            // 에러 처리
+        }
+    }
 </script>
 
 <section class="py-5">
     <form>
-        <input type="hidden" name="boardSeq" bind:value={data.boardSeq}>
 <!--    <input type="hidden" value="{data.userId}" name="boardSeq"> 추후 id와 관련한 로직 추가후 진행-->
         <div class="container px-4 px-lg-5 mt-5">
             <div>
                 <div class="board-wrapper">
                     <div class="board-title">
-                        <h5>{data.categoryNm}</h5>
-                        <h5 class="fw-bolder">{data.title}
-                            <span class="board-header-li">조회 {data.hits}</span>
-                            <span class="board-header-li">{data.inputDt}</span>
+                        <h5>{data.board.categoryNm}</h5>
+                        <h5 class="fw-bolder">{data.board.title}
+                            <span class="board-header-li">조회 {data.board.hits}</span>
+                            <span class="board-header-li">{data.board.inputDt}</span>
                         </h5>
                     </div>
                     <div class="board-content">
-                        <p>{data.content}</p>
+                        <p>{data.board.content}</p>
                     </div>
                 </div>
                 <div class="btn-container up-btn">
-                    <a type="button" class="btn btn-outline-primary" on:click={testUp}>추천[{data.up}]</a>
+                    <a type="button" class="btn btn-outline-primary" on:click={testUp}>추천[{data.board.up}]</a>
                 </div>
                 <div class="comment">
-                    <p>댓글</p>
-                    <ul>
-                        <li>
-                            댓글내용1
-                        </li>
-                        <li>
-                            댓글내용2
-                        </li>
-                        <li>
-                            댓글내용3
-                        </li>
-                    </ul>
+                    <div>
+                        <p>댓글</p>
+                        <ul>
+                            {#each data.commentList as comment}
+                                <li>
+                                    {comment.inputId} - {comment.content} <span class="comment-input-dt">{comment.inputDt}</span>
+                                </li>
+                            {/each}
+                        </ul>
+                    </div>
+                    <form on:submit={commentWrite}>
+                        <div class="mb-3">
+                            <input type="text" name="content" class="form-control" id="exampleFormControlInput1" placeholder="" bind:value={content}>
+                            <button type="submit" class="comment-input-btn">등록</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -87,5 +126,37 @@
         font-weight: lighter;
         float: right;
         margin-right: 20px;
+    }
+
+    .mb-3 {
+        display: flex;
+        align-items: flex-start;
+
+    }
+
+    .mb-3 input {
+        margin-right: 10px;
+    }
+
+    .comment-input-btn {
+        width: 75px;
+        height: 38px;
+    }
+
+    .comment-input-dt {
+        float: right;
+    }
+
+    ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        border-bottom: 1px solid darkgrey;
+        padding-bottom: 15px; /* 줄과 텍스트 사이의 간격을 설정할 수 있습니다. */
+        list-style: none;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 </style>
