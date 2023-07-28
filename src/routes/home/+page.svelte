@@ -19,6 +19,11 @@
         text-align: center;
     }
 
+    .board-comment-count {
+        color: #777;
+        font-size: smaller;
+    }
+
 </style>
 
 
@@ -45,7 +50,7 @@
                         <tr on:click={boardDetail(board.categoryNmEn,board.boardSeq)}>
                             <td>
                                 {board.title}
-                                <sapn>[{board.commentCount}]</sapn>
+                                <span class="board-comment-count">[{board.commentCount}]</span>
                             </td>
                             <td>
                                 {board.categoryNm}

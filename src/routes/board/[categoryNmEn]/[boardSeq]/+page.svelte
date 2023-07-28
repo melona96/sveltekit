@@ -6,6 +6,7 @@
     $: boardSeq = data.board.boardSeq;
     let userId = 'test1';
     let content;
+    let pSeq;
     async function testUp() {
         const param = {
             boardSeq,
@@ -70,6 +71,40 @@
             // 에러 처리
         }
     }
+
+    async function replyComment() {
+        const param = {
+            boardSeq,
+            userId,
+            content,
+            pSeq
+        };
+        console.log(param);
+        try {
+            const response = await fetch('/api/board/comment/write', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(param),
+                credentials: 'include'
+            });
+
+            console.log(response);
+            if (response.ok) {
+                console.log('연동 성공');
+                console.log(JSON.stringify(data));
+                const token = await response.json();
+                // 토큰을 저장하거나 필요한 후속 작업 수행
+                goto('/home')
+            } else {
+                // 로그인 실패 처리
+                alert('ERROR: 댓글 작성을 실패했습니다.')
+            }
+        } catch (error) {
+            // 에러 처리
+        }
+    }
 </script>
 
 <section class="py-5">
@@ -78,12 +113,18 @@
         <div class="container px-4 px-lg-5 mt-5">
             <div>
                 <div class="board-wrapper">
+                    <div class="board-header">
+                        <h3 class="fw-bold">{data.board.categoryNm}</h3>
+                    </div>
                     <div class="board-title">
-                        <h5>{data.board.categoryNm}</h5>
-                        <h5 class="fw-bolder">{data.board.title}
+                        <div>
+                            <p class="fw-bold">{data.board.title}</p>
+                        </div>
+                        <div>
+                            <span class="board-header-input-id">작성자 : {data.board.inputId}</span>
                             <span class="board-header-li">조회 {data.board.hits}</span>
                             <span class="board-header-li">{data.board.inputDt}</span>
-                        </h5>
+                        </div>
                     </div>
                     <div class="board-content">
                         <p>{data.board.content}</p>
@@ -97,8 +138,8 @@
                         <p>댓글</p>
                         <ul>
                             {#each data.commentList as comment}
-                                <li>
-                                    {comment.inputId} - {comment.content} <span class="comment-input-dt">{comment.inputDt}</span>
+                                <li on:click={replyComment}>
+                                    <span class="comment-input-id">{comment.inputId}</span> <span class="comment-content"> {comment.content}</span> <span class="comment-input-dt">{comment.inputDt}</span>
                                 </li>
                             {/each}
                         </ul>
@@ -145,6 +186,7 @@
 
     .comment-input-dt {
         float: right;
+        color: #777
     }
 
     ul {
@@ -154,9 +196,39 @@
 
     li {
         border-bottom: 1px solid darkgrey;
-        padding-bottom: 15px; /* 줄과 텍스트 사이의 간격을 설정할 수 있습니다. */
+        padding-bottom: 5px; /* 줄과 텍스트 사이의 간격을 설정할 수 있습니다. */
         list-style: none;
-        margin-top: 20px;
-        margin-bottom: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        cursor : pointer;
+
+    }
+
+    .comment-content {
+        margin-left: 5%;
+    }
+
+    .comment-input-id {
+        color: #777;
+    }
+
+    .board-content {
+        margin-top: 30px;
+        height: 500px;
+    }
+
+    .board-header {
+        border-bottom: 1px solid darkgrey;
+        margin-bottom: 10px;
+    }
+
+    .board-header-input-id {
+        font-size: smaller;
+        color: #333
+    }
+
+    .board-title {
+        border-bottom: 1px solid darkgrey;
+        padding-bottom: 10px;
     }
 </style>
