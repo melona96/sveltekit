@@ -44,7 +44,7 @@
             <h1 on:click={boardList(data.boardList[0].categoryNmEn)}>{data.boardList[0].categoryNm}</h1>
         </div>
         <div>
-            <a class="btn btn-outline-secondary" href="/board/write" title="글쓰기">글쓰기</a>
+            <a class="btn btn-outline-secondary" href="/board/{data.boardList[0].categoryNmEn}/write" title="글쓰기">글쓰기</a>
         </div>
         <table class="table">
             <thead class="table-light">

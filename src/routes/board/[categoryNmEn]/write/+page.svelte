@@ -2,17 +2,21 @@
     import {goto} from "$app/navigation"; // goto 함수로 자체적으로 redirect 제공
     import { onMount } from 'svelte';
     import Quill from "quill"; // WYSIWYG 에디터 npm install quill로 설치하고 import
+    import {page} from "$app/stores";
+
+    export let data;
 
     let quill;
-
     let title;
     let content;
+    $: categoryNmEn = data.categoryNmEn
 
     async function testWrite() {
         content = quill.getText();
         const data = {
             title,
-            content
+            content,
+            categoryNmEn
         };
         try {
             const response = await fetch('/api/board/write', {
@@ -46,6 +50,10 @@
             placeholder: '내용을 입력하세요.',
         });
     });
+
+    async function slugTest() {
+        console.log(page);
+    }
 </script>
 
 <style>
@@ -56,6 +64,7 @@
 
 <div class="container px-4 px-lg-5 mt-3">
     <form on:submit={testWrite}>
+        <input type="hidden" name="categoryCd" value="">
         <div class="mb-3">
             <input type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요." bind:value={title}>
         </div>
@@ -65,6 +74,7 @@
         <div>
             <button class="btn btn-outline-secondary" type="submit">작성</button>
         </div>
+
     </form>
     <br>
 </div>

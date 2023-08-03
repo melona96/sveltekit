@@ -80,7 +80,7 @@
                 console.log('연동 성공');
                 const token = await response.json();
                 // 토큰을 저장하거나 필요한 후속 작업 수행
-                goto('/home')
+                window.location.reload(); // 현재 페이지 redirect
             } else {
                 // 로그인 실패 처리
                 alert('ERROR: 댓글 작성을 실패했습니다.')

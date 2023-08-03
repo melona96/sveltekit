@@ -39,7 +39,6 @@
     <div class="container px-4 px-lg-5 mt-3">
         <div>
             <span class="board-name">전체게시판</span>
-            <a class="btn btn-outline-secondary" href="/board/write" title="글쓰기">글쓰기</a>
         </div>
         <table class="table">
             <thead class="table-light">
