@@ -1,13 +1,20 @@
 <script>
     import {goto} from "$app/navigation";
+    import { createEventDispatcher } from 'svelte';
     export let data;
     console.log(data)
 
     $: boardSeq = data.board.boardSeq;
     let userId = 'test1';
-    let content;
-    let pCommentSeq;
-    let lvl;
+
+    let showReplyForms = new Array(data.commentList.length).fill(false);
+
+    const dispatch = createEventDispatcher();
+
+    function commentReply(index) {
+        // 폼의 가시성을 토글
+        showReplyForms[index] = !showReplyForms[index];
+    }
     async function testUp() {
         const param = {
             boardSeq,
@@ -40,13 +47,22 @@
         }
     }
 
-    async function commentWrite() {
+    async function commentWrite(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+
+        const boardSeq = formData.get('boardSeq');
+        const userId = formData.get('userId');
+        const content = formData.get('content');
+        const parentSeq = formData.get('pSeq');
+        const lvl = formData.get('lvl');
+
         const param = {
             boardSeq,
             userId,
             content,
-            pCommentSeq,
-            lvl
+            parentSeq,
+            lvl,
         };
         console.log(param);
         try {
@@ -56,13 +72,12 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(param),
-                credentials: 'include'
+                // credentials: 'include'
             });
 
             console.log(response);
             if (response.ok) {
                 console.log('연동 성공');
-                console.log(JSON.stringify(data));
                 const token = await response.json();
                 // 토큰을 저장하거나 필요한 후속 작업 수행
                 goto('/home')
@@ -75,21 +90,10 @@
         }
     }
 
-    function commentReply(commentId) {
-        /*<form on:submit={commentWrite}>
-            <div class="comment-li-reply">
-                <input type="text" name="content" class="form-control" id="" placeholder="" bind:value={content}>
-                    <button type="submit" class="comment-input-btn">등록</button>
-            </div>
-        </form>*/
-    }
-
     function boardList(categoryNmEn) {
         const url = `/board/${categoryNmEn}`;
         window.location.href = url; //
     }
-
-
 </script>
 
 <section class="py-5">
@@ -122,14 +126,24 @@
                     <div>
                         <p>댓글 {data.commentList.length}</p>
                         <ul>
-                            {#each data.commentList as comment}
+                            {#each data.commentList as comment, index}
                                 {#if comment.lvl === '0'}
-                                    <li on:click={commentReply}>
+                                    <li on:click={() => commentReply(index)}>
                                         <span class="comment-input-id">{comment.inputId}</span>
                                         <span class="comment-content"> {comment.content}</span>
                                         <span class="comment-input-dt">{comment.inputDt}</span>
                                         <!-- 답글달기 클릭시 form 생성 -->
                                     </li>
+                                    {#if showReplyForms[index]}
+                                        <form on:submit={commentWrite}>
+                                            <input type="hidden" name="boardSeq" value="{comment.boardSeq}" />
+                                            <input type="hidden" name="lvl" value="1" />
+                                            <input type="hidden" name="pSeq" value="{comment.commentSeq}" />
+                                            <input type="hidden" name="testParam" value="{comment.commentSeq}" />
+                                            <input type="text" name="content" />
+                                            <button type="submit">작성</button>
+                                        </form>
+                                    {/if}
                                 {:else}
                                     <li class="comment-li-reply">
                                         <div></div>
@@ -145,7 +159,8 @@
 
                     <form on:submit={commentWrite}>
                         <div class="mb-3">
-                            <input type="text" name="content" class="form-control" id="exampleFormControlInput1" placeholder="" bind:value={content}>
+                            <input type="hidden" name="boardSeq" class="form-control" value="{data.board.boardSeq}">
+                            <input type="text" name="content" class="form-control" id="exampleFormControlInput1">
                             <button type="submit" class="comment-input-btn">등록</button>
                         </div>
                     </form>

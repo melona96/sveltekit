@@ -6,6 +6,11 @@
         window.location.href = url; //
     }
 
+    function boardList(categoryNmEn) {
+        const url = `/board/${categoryNmEn}`;
+        window.location.href = url; //
+    }
+
 </script>
 <style>
     tr {
@@ -25,12 +30,19 @@
         font-size: smaller;
     }
 
+    h1{
+        cursor: pointer;
+    }
+
 </style>
 
 
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-3">
+        <div>
+            <h1 on:click={boardList(data.boardList[0].categoryNmEn)}>{data.boardList[0].categoryNm}</h1>
+        </div>
         <div>
             <a class="btn btn-outline-secondary" href="/board/write" title="글쓰기">글쓰기</a>
         </div>

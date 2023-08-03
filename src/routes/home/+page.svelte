@@ -24,6 +24,13 @@
         font-size: smaller;
     }
 
+    .btn.btn-outline-secondary {
+        float: right;
+    }
+
+    .board-name {
+        font-size: 50px;
+    }
 </style>
 
 
@@ -31,6 +38,7 @@
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-3">
         <div>
+            <span class="board-name">전체게시판</span>
             <a class="btn btn-outline-secondary" href="/board/write" title="글쓰기">글쓰기</a>
         </div>
         <table class="table">
