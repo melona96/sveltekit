@@ -6,7 +6,8 @@
     $: boardSeq = data.board.boardSeq;
     let userId = 'test1';
     let content;
-    let pSeq;
+    let pCommentSeq;
+    let lvl;
     async function testUp() {
         const param = {
             boardSeq,
@@ -43,41 +44,9 @@
         const param = {
             boardSeq,
             userId,
-            content
-        };
-        console.log(param);
-        try {
-            const response = await fetch('/api/board/comment/write', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(param),
-                credentials: 'include'
-            });
-
-            console.log(response);
-            if (response.ok) {
-                console.log('연동 성공');
-                console.log(JSON.stringify(data));
-                const token = await response.json();
-                // 토큰을 저장하거나 필요한 후속 작업 수행
-                goto('/home')
-            } else {
-                // 로그인 실패 처리
-                alert('ERROR: 댓글 작성을 실패했습니다.')
-            }
-        } catch (error) {
-            // 에러 처리
-        }
-    }
-
-    async function replyComment() {
-        const param = {
-            boardSeq,
-            userId,
             content,
-            pSeq
+            pCommentSeq,
+            lvl
         };
         console.log(param);
         try {
@@ -105,6 +74,7 @@
             // 에러 처리
         }
     }
+
 </script>
 
 <section class="py-5">
@@ -135,12 +105,24 @@
                 </div>
                 <div class="comment">
                     <div>
-                        <p>댓글</p>
+                        <p>댓글 {data.commentList.length}</p>
                         <ul>
                             {#each data.commentList as comment}
-                                <li on:click={replyComment}>
-                                    <span class="comment-input-id">{comment.inputId}</span> <span class="comment-content"> {comment.content}</span> <span class="comment-input-dt">{comment.inputDt}</span>
-                                </li>
+                                {#if comment.lvl === '0'}
+                                    <li on:click={commentWrite}>
+                                        <span class="comment-input-id">{comment.inputId}</span>
+                                        <span class="comment-content"> {comment.content}</span>
+                                        <span class="comment-input-dt">{comment.inputDt}</span>
+                                        <!-- 답글달기 클릭시 form 생성 -->
+                                    </li>
+                                {:else}
+                                    <li class="comment-li-reply">
+                                        <div></div>
+                                        <span class="comment-input-id">{comment.inputId}</span>
+                                        <span class="comment-content">{comment.content}</span>
+                                        <span class="comment-input-dt">{comment.inputDt}</span>
+                                    </li>
+                                {/if}
                             {/each}
                         </ul>
                     </div>
@@ -195,8 +177,8 @@
     }
 
     li {
-        border-bottom: 1px solid darkgrey;
-        padding-bottom: 5px; /* 줄과 텍스트 사이의 간격을 설정할 수 있습니다. */
+        border-top: 1px solid #eee;
+        padding-top: 9px; /* 줄과 텍스트 사이의 간격을 설정할 수 있습니다. */
         list-style: none;
         margin-top: 10px;
         margin-bottom: 10px;
@@ -205,11 +187,14 @@
     }
 
     .comment-content {
-        margin-left: 5%;
+
     }
 
     .comment-input-id {
         color: #777;
+        margin-right: 5%;
+        display: inline-block;
+        width: 9%;
     }
 
     .board-content {
@@ -230,5 +215,15 @@
     .board-title {
         border-bottom: 1px solid darkgrey;
         padding-bottom: 10px;
+    }
+
+    h3.fw-bold {
+        cursor: pointer;
+    }
+
+    .comment-li-reply{
+        margin-left: 3%;
+        background: #eee;
+        padding: 2px
     }
 </style>
