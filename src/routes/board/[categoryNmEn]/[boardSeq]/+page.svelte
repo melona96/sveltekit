@@ -75,6 +75,21 @@
         }
     }
 
+    function commentReply(commentId) {
+        /*<form on:submit={commentWrite}>
+            <div class="comment-li-reply">
+                <input type="text" name="content" class="form-control" id="" placeholder="" bind:value={content}>
+                    <button type="submit" class="comment-input-btn">등록</button>
+            </div>
+        </form>*/
+    }
+
+    function boardList(categoryNmEn) {
+        const url = `/board/${categoryNmEn}`;
+        window.location.href = url; //
+    }
+
+
 </script>
 
 <section class="py-5">
@@ -84,7 +99,7 @@
             <div>
                 <div class="board-wrapper">
                     <div class="board-header">
-                        <h3 class="fw-bold">{data.board.categoryNm}</h3>
+                        <h3 class="fw-bold" on:click={boardList(data.board.categoryNmEn)}>{data.board.categoryNm}</h3>
                     </div>
                     <div class="board-title">
                         <div>
@@ -109,7 +124,7 @@
                         <ul>
                             {#each data.commentList as comment}
                                 {#if comment.lvl === '0'}
-                                    <li on:click={commentWrite}>
+                                    <li on:click={commentReply}>
                                         <span class="comment-input-id">{comment.inputId}</span>
                                         <span class="comment-content"> {comment.content}</span>
                                         <span class="comment-input-dt">{comment.inputDt}</span>
@@ -126,6 +141,8 @@
                             {/each}
                         </ul>
                     </div>
+
+
                     <form on:submit={commentWrite}>
                         <div class="mb-3">
                             <input type="text" name="content" class="form-control" id="exampleFormControlInput1" placeholder="" bind:value={content}>
@@ -224,6 +241,14 @@
     .comment-li-reply{
         margin-left: 3%;
         background: #eee;
-        padding: 2px
+        padding: 2px;
+        display: flex;
+        justify-content: space-between;
     }
+
+    .comment-input-dt {
+        margin-left: auto; /* margin-left 값을 자동으로 설정하여 오른쪽 끝으로 이동 */
+    }
+
+
 </style>

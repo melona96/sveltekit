@@ -1,27 +1,79 @@
 <script>
     export let data;
-    console.log(data);
+
+    function boardDetail(categoryNmEn, boardSeq) {
+        const url = `/board/${categoryNmEn}/${boardSeq}`;
+        window.location.href = url; //
+    }
+
 </script>
+<style>
+    tr {
+        cursor : pointer;
+    }
+
+    tr:hover {
+        background-color: #f2f2f2;
+    }
+
+    th.board-title {
+        text-align: center;
+    }
+
+    .board-comment-count {
+        color: #777;
+        font-size: smaller;
+    }
+
+</style>
+
+
+<!-- Section-->
 <section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-
-        {#each data.item as row}
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- 식당명-->
-                            <h5 class="fw-bolder">{row.title}</h5>
-                            <!-- 카테고리 -->
-                            {row.content}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {/each}
-
+    <div class="container px-4 px-lg-5 mt-3">
+        <div>
+            <a class="btn btn-outline-secondary" href="/board/write" title="글쓰기">글쓰기</a>
+        </div>
+        <table class="table">
+            <thead class="table-light">
+            <tr>
+                <th class="board-title">제목</th>
+                <th>카테고리</th>
+                <th>작성자</th>
+                <th>작성일</th>
+                <th>조회수</th>
+                <th>추천</th>
+            </tr>
+            </thead>
+            <tbody>
+            {#if data != null}
+                {#each data.boardList as board}
+                    <tr on:click={boardDetail(board.categoryNmEn,board.boardSeq)}>
+                        <td>
+                            {board.title}
+                            <span class="board-comment-count">[{board.commentCount}]</span>
+                        </td>
+                        <td>
+                            {board.categoryNm}
+                        </td>
+                        <td>
+                            {board.inputId}
+                        </td>
+                        <td>
+                            {board.inputDt}
+                        </td>
+                        <td>
+                            {board.hits}
+                        </td>
+                        <td>
+                            {board.up}
+                        </td>
+                    </tr>
+                {/each}
+            {/if}
+            </tbody>
+        </table>
     </div>
+
 </section>
+
