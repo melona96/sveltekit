@@ -58,7 +58,7 @@
             </tr>
             </thead>
             <tbody>
-            {#if data != null}
+            {#if data.boardList != null}
                 {#each data.boardList as board}
                     <tr on:click={boardDetail(board.categoryNmEn,board.boardSeq)}>
                         <td>

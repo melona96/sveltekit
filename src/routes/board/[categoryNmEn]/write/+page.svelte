@@ -51,9 +51,6 @@
         });
     });
 
-    async function slugTest() {
-        console.log(page);
-    }
 </script>
 
 <style>

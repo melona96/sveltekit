@@ -12,7 +12,6 @@
     const dispatch = createEventDispatcher();
 
     function commentReply(index) {
-        // 폼의 가시성을 토글
         showReplyForms[index] = !showReplyForms[index];
     }
     async function testUp() {
@@ -132,7 +131,6 @@
                                         <span class="comment-input-id">{comment.inputId}</span>
                                         <span class="comment-content"> {comment.content}</span>
                                         <span class="comment-input-dt">{comment.inputDt}</span>
-                                        <!-- 답글달기 클릭시 form 생성 -->
                                     </li>
                                     {#if showReplyForms[index]}
                                         <form on:submit={commentWrite}>

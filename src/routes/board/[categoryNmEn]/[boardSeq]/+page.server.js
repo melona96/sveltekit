@@ -15,7 +15,7 @@ export async function load({fetch, params}) {
             const data = await response.json();
             return data;
         } else {
-            // 로그인 실패 처리
+            // 실패 처리
             console.log('연동 실패')
         }
     } catch (error) {
