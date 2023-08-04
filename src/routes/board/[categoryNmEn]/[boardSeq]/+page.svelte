@@ -71,7 +71,6 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(param),
-                // credentials: 'include'
             });
 
             console.log(response);

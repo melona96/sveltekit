@@ -7,7 +7,6 @@ export async function load({fetch, params}) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(param)
-            // credentials: 'include'
         });
 
         if (response.ok) {
