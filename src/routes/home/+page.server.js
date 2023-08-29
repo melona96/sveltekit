@@ -1,11 +1,12 @@
-export async function load({fetch}) {
+export async function load({fetch, params}) {
+    const param = params;
     try {
         const response = await fetch('/api/board/list', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
-            // credentials: 'include'
+            },
+            body: JSON.stringify(param)
         });
 
         if (response.ok) {

@@ -1,12 +1,19 @@
 <script>
     import {goto} from "$app/navigation";
+    import { createEventDispatcher } from 'svelte';
     export let data;
     console.log(data)
 
     $: boardSeq = data.board.boardSeq;
     let userId = 'test1';
-    let content;
-    let pSeq;
+
+    let showReplyForms = new Array(data.commentList.length).fill(false);
+
+    const dispatch = createEventDispatcher();
+
+    function commentReply(index) {
+        showReplyForms[index] = !showReplyForms[index];
+    }
     async function testUp() {
         const param = {
             boardSeq,
@@ -39,11 +46,22 @@
         }
     }
 
-    async function commentWrite() {
+    async function commentWrite(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+
+        const boardSeq = formData.get('boardSeq');
+        const userId = formData.get('userId');
+        const content = formData.get('content');
+        const parentSeq = formData.get('pSeq');
+        const lvl = formData.get('lvl');
+
         const param = {
             boardSeq,
             userId,
-            content
+            content,
+            parentSeq,
+            lvl,
         };
         console.log(param);
         try {
@@ -53,16 +71,14 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(param),
-                credentials: 'include'
             });
 
             console.log(response);
             if (response.ok) {
                 console.log('연동 성공');
-                console.log(JSON.stringify(data));
                 const token = await response.json();
                 // 토큰을 저장하거나 필요한 후속 작업 수행
-                goto('/home')
+                window.location.reload(); // 현재 페이지 redirect
             } else {
                 // 로그인 실패 처리
                 alert('ERROR: 댓글 작성을 실패했습니다.')
@@ -72,38 +88,9 @@
         }
     }
 
-    async function replyComment() {
-        const param = {
-            boardSeq,
-            userId,
-            content,
-            pSeq
-        };
-        console.log(param);
-        try {
-            const response = await fetch('/api/board/comment/write', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(param),
-                credentials: 'include'
-            });
-
-            console.log(response);
-            if (response.ok) {
-                console.log('연동 성공');
-                console.log(JSON.stringify(data));
-                const token = await response.json();
-                // 토큰을 저장하거나 필요한 후속 작업 수행
-                goto('/home')
-            } else {
-                // 로그인 실패 처리
-                alert('ERROR: 댓글 작성을 실패했습니다.')
-            }
-        } catch (error) {
-            // 에러 처리
-        }
+    function boardList(categoryNmEn) {
+        const url = `/board/${categoryNmEn}`;
+        window.location.href = url; //
     }
 </script>
 
@@ -114,7 +101,7 @@
             <div>
                 <div class="board-wrapper">
                     <div class="board-header">
-                        <h3 class="fw-bold">{data.board.categoryNm}</h3>
+                        <h3 class="fw-bold" on:click={boardList(data.board.categoryNmEn)}>{data.board.categoryNm}</h3>
                     </div>
                     <div class="board-title">
                         <div>
@@ -135,18 +122,42 @@
                 </div>
                 <div class="comment">
                     <div>
-                        <p>댓글</p>
+                        <p>댓글 {data.commentList.length}</p>
                         <ul>
-                            {#each data.commentList as comment}
-                                <li on:click={replyComment}>
-                                    <span class="comment-input-id">{comment.inputId}</span> <span class="comment-content"> {comment.content}</span> <span class="comment-input-dt">{comment.inputDt}</span>
-                                </li>
+                            {#each data.commentList as comment, index}
+                                {#if comment.lvl === '0'}
+                                    <li on:click={() => commentReply(index)}>
+                                        <span class="comment-input-id">{comment.inputId}</span>
+                                        <span class="comment-content"> {comment.content}</span>
+                                        <span class="comment-input-dt">{comment.inputDt}</span>
+                                    </li>
+                                    {#if showReplyForms[index]}
+                                        <form on:submit={commentWrite}>
+                                            <input type="hidden" name="boardSeq" value="{comment.boardSeq}" />
+                                            <input type="hidden" name="lvl" value="1" />
+                                            <input type="hidden" name="pSeq" value="{comment.commentSeq}" />
+                                            <input type="hidden" name="testParam" value="{comment.commentSeq}" />
+                                            <input type="text" name="content" />
+                                            <button type="submit">작성</button>
+                                        </form>
+                                    {/if}
+                                {:else}
+                                    <li class="comment-li-reply">
+                                        <div></div>
+                                        <span class="comment-input-id">{comment.inputId}</span>
+                                        <span class="comment-content">{comment.content}</span>
+                                        <span class="comment-input-dt">{comment.inputDt}</span>
+                                    </li>
+                                {/if}
                             {/each}
                         </ul>
                     </div>
+
+
                     <form on:submit={commentWrite}>
                         <div class="mb-3">
-                            <input type="text" name="content" class="form-control" id="exampleFormControlInput1" placeholder="" bind:value={content}>
+                            <input type="hidden" name="boardSeq" class="form-control" value="{data.board.boardSeq}">
+                            <input type="text" name="content" class="form-control" id="exampleFormControlInput1">
                             <button type="submit" class="comment-input-btn">등록</button>
                         </div>
                     </form>
@@ -195,8 +206,8 @@
     }
 
     li {
-        border-bottom: 1px solid darkgrey;
-        padding-bottom: 5px; /* 줄과 텍스트 사이의 간격을 설정할 수 있습니다. */
+        border-top: 1px solid #eee;
+        padding-top: 9px; /* 줄과 텍스트 사이의 간격을 설정할 수 있습니다. */
         list-style: none;
         margin-top: 10px;
         margin-bottom: 10px;
@@ -205,11 +216,14 @@
     }
 
     .comment-content {
-        margin-left: 5%;
+
     }
 
     .comment-input-id {
         color: #777;
+        margin-right: 5%;
+        display: inline-block;
+        width: 9%;
     }
 
     .board-content {
@@ -231,4 +245,22 @@
         border-bottom: 1px solid darkgrey;
         padding-bottom: 10px;
     }
+
+    h3.fw-bold {
+        cursor: pointer;
+    }
+
+    .comment-li-reply{
+        margin-left: 3%;
+        background: #eee;
+        padding: 2px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .comment-input-dt {
+        margin-left: auto; /* margin-left 값을 자동으로 설정하여 오른쪽 끝으로 이동 */
+    }
+
+
 </style>
